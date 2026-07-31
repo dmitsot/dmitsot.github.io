@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teaching &middot; Dimitrios Mitsotakis</title>
+<meta name="description" content="Undergraduate and postgraduate courses in applied and pure mathematics.">
+<meta property="og:title" content="Dimitrios Mitsotakis &ndash; Teaching">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Undergraduate and postgraduate courses in applied and pure mathematics.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<div class="layout">
+
+  <header class="sidebar">
+    <div class="sidebar-inner">
+      <p class="sidebar-brand"><a href="index.html">Dimitrios Mitsotakis</a></p>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="sitenav">Menu</button>
+      <hr>
+      <nav class="site-nav" id="sitenav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">About me</a></li>
+        <li><a href="wave-phenomena.html">Wave Phenomena</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="teaching.html" aria-current="page">Teaching</a></li>
+        <li><a href="computational-mathematics.html">Computational Mathematics</a></li>
+        <li><a href="software.html">Software</a></li>
+        <li><a href="academic-genealogy.html">Academic Genealogy</a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-foot">
+        <p><a href="mailto:dmitsot@gmail.com">Contact me</a></p>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-col">
+    <main id="main" class="content">
+
+      <header class="page-head">
+        <h1 class="page-title">Teaching</h1>
+      </header>
+
+  <blockquote class="epigraph">
+    <p>All things are difficult before they are easy.</p>
+    <cite>Richard Feynman</cite>
+  </blockquote>
+
+  <figure>
+    <img src="assets/images/teaching.png" alt="">
+  </figure>
+
+  <p>I have offered undergraduate and postgraduate courses in various fields of applied
+  and pure mathematics including interdisciplinary courses such as fluid mechanics and
+  engineering mathematics. Information about current courses can be found on the
+  <a href="http://www.victoria.ac.nz/sms/about/staff/dimitrios-mitsotakis" target="_blank" rel="noopener">official VUW
+  course website</a>.</p>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>Note: the PDF files linked from this website are preprint versions and may
+        differ from the published articles &mdash;
+        <a href="mailto:dmitsot@gmail.com">contact me</a>.</p>
+      </div>
+    </footer>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var btn = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('sitenav');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+
+/* Until assets/images/ is populated, show a note instead of a broken image. */
+document.addEventListener('error', function (e) {
+  var img = e.target;
+  if (!img || img.tagName !== 'IMG' || img.dataset.handled) return;
+  img.dataset.handled = '1';
+  var note = document.createElement('span');
+  note.className = 'asset-missing';
+  note.textContent = 'Image not downloaded yet: ' + img.getAttribute('src');
+  img.replaceWith(note);
+}, true);
+</script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+/* Dimitrios Mitsotakis — academic site
+   Single stylesheet, no build step.
+
+   Layout: fixed navy sidebar on the left, serif reading column on the right.
+   To lighten the sidebar, change --sidebar-bg / --sidebar-ink below; nothing
+   else depends on them. */
+
+:root {
+  /* Content */
+  --ink:        #1c1f24;
+  --ink-soft:   #4a5158;
+  --ink-faint:  #767d85;
+  --rule:       #e3e6ea;
+  --bg:         #ffffff;
+  --bg-soft:    #f6f8fa;
+  --accent:     #14507a;
+  --accent-lit: #1d6ea5;
+  --title:      #0e6f78;   /* blue-green, used for page and section titles */
+  --title-lit:  #13939e;   /* lighter blue-green, for hover */
+
+  /* Sidebar */
+  --sidebar-bg:      #12385a;
+  --sidebar-bg-deep: #0d2b45;
+  --sidebar-ink:     rgba(255, 255, 255, .70);
+  --sidebar-strong:  #ffffff;
+  --sidebar-rule:    rgba(255, 255, 255, .15);
+  --sidebar-hover:   rgba(255, 255, 255, .08);
+  --sidebar-w:       16.5rem;
+
+  /* Width of the reading column. It fills whatever space the sidebar leaves,
+     up to this cap. Raise the cap for wider text, or set it to 100% to run
+     edge to edge on any monitor. Past roughly 90 characters a line, the eye
+     starts losing its place returning to the left margin, which is why there
+     is a cap at all. */
+  --measure: min(72rem, 100%);
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 16.25px;
+  line-height: 1.68;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--accent);
+  color: #fff;
+  padding: .6rem 1rem;
+  z-index: 100;
+}
+.skip:focus { left: 0; }
+
+/* ---------- Shell ---------- */
+
+.layout { display: flex; align-items: flex-start; }
+
+.main-col { flex: 1 1 auto; min-width: 0; }
+
+/* ---------- Sidebar ---------- */
+
+.sidebar {
+  flex: 0 0 var(--sidebar-w);
+  width: var(--sidebar-w);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--sidebar-bg);
+  background-image: linear-gradient(180deg, var(--sidebar-bg) 0%, var(--sidebar-bg-deep) 100%);
+  color: var(--sidebar-ink);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-inner {
+  padding: 2.25rem 1.6rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.sidebar-brand {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  line-height: 1.25;
+  font-weight: 600;
+  margin: 0;
+}
+.sidebar-brand a { color: var(--sidebar-strong); text-decoration: none; border: 0; }
+.sidebar-brand a:hover { opacity: .85; }
+
+.sidebar hr {
+  border: 0;
+  border-top: 1px solid var(--sidebar-rule);
+  margin: 1.35rem 0 1.1rem;
+}
+
+/* Navigation */
+
+.nav-toggle { display: none; }
+
+nav.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: .88rem;
+}
+
+nav.site-nav a {
+  display: block;
+  padding: .42rem .6rem;
+  margin: 0 -.6rem;
+  border-radius: 4px;
+  color: var(--sidebar-ink);
+  text-decoration: none;
+  border: 0;
+  transition: background-color .12s ease, color .12s ease;
+}
+nav.site-nav a:hover {
+  background: var(--sidebar-hover);
+  color: var(--sidebar-strong);
+}
+nav.site-nav a[aria-current="page"] {
+  color: var(--sidebar-strong);
+  font-weight: 600;
+  background: var(--sidebar-hover);
+  box-shadow: inset 2px 0 0 var(--sidebar-strong);
+}
+
+.sidebar-foot {
+  margin-top: auto;
+  padding-top: 2rem;
+  font-family: var(--sans);
+  font-size: .76rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .5);
+}
+.sidebar-foot a {
+  color: rgba(255, 255, 255, .72);
+  border-bottom: 1px solid rgba(255, 255, 255, .25);
+  text-decoration: none;
+}
+.sidebar-foot a:hover {
+  color: var(--sidebar-strong);
+  border-bottom-color: var(--sidebar-strong);
+}
+
+/* ---------- Content ---------- */
+
+main {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 3.25rem 2.5rem 4rem;
+}
+
+/* ---------- Page masthead ---------- */
+
+.page-head {
+  margin: 0 0 2.3rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+h1.page-title {
+  font-size: 2.85rem;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  color: var(--title);
+  margin: 0;
+}
+
+/* University logo on the About page — its own line above the text, pushed to
+   the right edge of the column by the automatic left margin. */
+.vuw-logo {
+  display: block;
+  border: 0;
+  width: 270px;
+  max-width: 62%;
+  margin: 0 0 1.9rem auto;
+}
+.vuw-logo img { width: 100%; height: auto; border-radius: 0; }
+.vuw-logo:hover { opacity: .82; }
+
+h2 {
+  font-size: 1.32rem;
+  font-weight: 600;
+  line-height: 1.32;
+  letter-spacing: -.005em;
+  margin: 2.9rem 0 .8rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--rule);
+}
+
+h3 {
+  font-family: var(--sans);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 2.3rem 0 .7rem;
+}
+
+p { margin: 0 0 1.2rem; }
+
+/* ---------- Justification ----------
+   Flush left and right. Automatic hyphenation is essential here: without it,
+   long technical words ("Boussinesq", "well-posedness") open up rivers of
+   whitespace. Relies on lang="en" being set on <html>. */
+
+.content p,
+.content li,
+.content dd,
+.epigraph p {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;   /* don't hyphenate short words */
+}
+
+/* Headings, captions and short labels stay ragged-right. */
+.content h1, .content h2, .content h3,
+figcaption, .eq-note, .epigraph cite,
+.facts p, .badges li {
+  text-align: left;
+  hyphens: manual;
+  -webkit-hyphens: manual;
+}
+
+/* Bibliographies contain unbreakable DOIs and URLs; let them break rather
+   than blow a line apart. */
+ol.refs li, ul.refs li, dl.refs dd {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(20, 80, 122, .3);
+}
+a:hover { color: var(--accent-lit); border-bottom-color: var(--accent-lit); }
+
+/* ---------- Epigraph ---------- */
+
+.epigraph {
+  margin: 0 0 2.6rem;
+  padding: 0 0 0 1.2rem;
+  border-left: 3px solid var(--rule);
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: .88rem;
+  line-height: 1.6;
+}
+.epigraph p { margin: 0 0 .5rem; }
+.epigraph cite {
+  display: block;
+  font-style: normal;
+  font-family: var(--sans);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ---------- Media ---------- */
+
+figure { margin: 2.1rem 0; }
+
+figure img, .content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 3px;
+}
+
+figcaption {
+  font-family: var(--sans);
+  font-size: .8rem;
+  color: var(--ink-faint);
+  margin-top: .6rem;
+  line-height: 1.55;
+}
+
+.portrait {
+  float: left;
+  width: 155px;
+  margin: .3rem 1.7rem 1.25rem 0;
+  border-radius: 3px;
+}
+
+.figure-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .7rem;
+  margin: 1.5rem 0 .75rem;
+}
+.figure-grid img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: #fff;
+}
+
+.video {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  margin: .75rem 0 2rem;
+  background: var(--bg-soft);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.asset-missing {
+  display: block;
+  padding: 2.25rem 1rem;
+  text-align: center;
+  background: var(--bg-soft);
+  border: 1px dashed var(--rule);
+  border-radius: 3px;
+  font-family: var(--sans);
+  font-size: .8rem;
+  color: var(--ink-faint);
+}
+
+/* ---------- Lists ---------- */
+
+ul, ol { margin: 0 0 1.2rem; padding-left: 1.35rem; }
+li { margin-bottom: .4rem; }
+
+ol.refs, ul.refs {
+  font-size: .92rem;
+  line-height: 1.55;
+  padding-left: 1.6rem;
+}
+ol.refs li, ul.refs li { margin-bottom: .85rem; }
+ol.refs::marker { color: var(--ink-faint); }
+
+dl.refs { font-size: .92rem; line-height: 1.55; }
+dl.refs dt {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .78rem;
+  color: var(--ink-faint);
+  margin-top: .95rem;
+}
+dl.refs dd { margin: .15rem 0 0; }
+
+/* ---------- Profile badges ----------
+   The three logos have different proportions: GitHub and ResearchGate are 10:3
+   wordmarks, Google Scholar is a stacked 1.76:1 mark. Matching their heights
+   would leave Scholar half the width of the others, so instead every badge gets
+   an identical tile and the logo is fitted inside it with object-fit. Equal
+   footprints, each logo at its largest possible size within them. */
+
+.badges {
+  list-style: none;
+  padding: 0;
+  margin: 2.1rem 0 .5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 1rem;
+}
+
+/* One tile against each edge, one centred between them. */
+.badges li:nth-child(1) { justify-self: start; }
+.badges li:nth-child(2) { justify-self: center; }
+.badges li:nth-child(3) { justify-self: end; }
+
+.badges a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 156px;
+  height: 92px;
+  padding: .85rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: #fff;
+  transition: border-color .12s ease, box-shadow .12s ease;
+}
+.badges a:hover {
+  border-color: var(--title);
+  box-shadow: 0 1px 4px rgba(14, 111, 120, .14);
+}
+
+.badges img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+/* ---------- Facts ---------- */
+
+/* Two figures on one line: first against the left edge, second against the
+   right. They wrap onto separate lines if the column gets too narrow. */
+.facts {
+  margin: 2rem 0;
+  padding: 1rem 1.25rem;
+  background: var(--bg-soft);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+  font-family: var(--sans);
+  font-size: .86rem;
+  color: var(--ink-soft);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .35rem 2rem;
+}
+.facts p { margin: 0; }
+
+/* ---------- Collapsible sections (Research page) ----------
+   Native <details>, so the page works with JavaScript disabled and the browser
+   handles keyboard and screen-reader semantics. The <h2> lives inside the
+   <summary> to keep the document outline intact. */
+
+.section { border-top: 1px solid var(--rule); }
+.section:last-of-type { border-bottom: 1px solid var(--rule); }
+
+.section > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.1rem 0;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.section > summary::-webkit-details-marker { display: none; }
+.section > summary::marker { content: ""; }
+
+.section > summary h2 {
+  margin: 0;
+  padding-top: 0;
+  border-top: 0;
+  font-size: 1.25rem;
+  color: var(--title);
+  transition: color .12s ease;
+}
+.section > summary:hover h2 { color: var(--title-lit); }
+
+.section > summary:focus-visible {
+  outline: 2px solid var(--title);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Chevron, rotating when the section opens */
+.section > summary::after {
+  content: "";
+  flex: 0 0 auto;
+  width: .5rem;
+  height: .5rem;
+  border-right: 2px solid var(--ink-faint);
+  border-bottom: 2px solid var(--ink-faint);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform .16s ease, border-color .12s ease;
+}
+.section[open] > summary::after {
+  transform: rotate(-135deg) translate(-3px, -3px);
+  border-color: var(--title);
+}
+
+.section-body { padding: .25rem 0 1.6rem; }
+.section-body > :first-child { margin-top: 0; }
+.section-body h3 { margin-top: 1.8rem; }
+
+/* ---------- Gallery ---------- */
+
+.gallery-item { margin: 0 0 2.75rem; }
+.gallery-item h2 {
+  border-top: 0;
+  padding-top: 0;
+  font-size: 1.08rem;
+  margin: 0 0 .6rem;
+}
+
+/* ---------- Equations ---------- */
+
+.eq { margin: 1.5rem 0; overflow-x: auto; }
+
+.eq-note {
+  font-family: var(--sans);
+  font-size: .79rem;
+  color: var(--ink-faint);
+  border-left: 3px solid var(--rule);
+  padding-left: .9rem;
+  margin: 1.5rem 0;
+}
+
+/* ---------- Footer ---------- */
+
+footer.site-footer { border-top: 1px solid var(--rule); }
+.footer-inner {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 1.6rem 2.5rem 3rem;
+  font-family: var(--sans);
+  font-size: .8rem;
+  color: var(--ink-faint);
+  line-height: 1.6;
+}
+.footer-inner p { margin: 0; }
+
+/* ---------- Responsive ---------- */
+
+/* Wider windows: grow the type and the gutters along with the column, so a
+   maximized window gains readable text rather than just longer lines. */
+
+@media (min-width: 1280px) {
+  body { font-size: 17.25px; }
+  main { padding: 3.5rem 3.5rem 4.5rem; }
+  .footer-inner { padding-left: 3.5rem; padding-right: 3.5rem; }
+}
+
+@media (min-width: 1680px) {
+  body { font-size: 18.25px; }
+  main { padding: 4rem 4.5rem 5rem; }
+  .footer-inner { padding-left: 4.5rem; padding-right: 4.5rem; }
+}
+
+@media (max-width: 900px) {
+  :root { --sidebar-w: 14rem; }
+  main { padding: 2.75rem 2rem 3.5rem; }
+  .footer-inner { padding-left: 2rem; padding-right: 2rem; }
+}
+
+@media (max-width: 720px) {
+  body { font-size: 15.75px; }
+
+  .layout { display: block; }
+
+  .sidebar {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+  .sidebar-inner { padding: 1.1rem 1.25rem; position: relative; }
+
+  .sidebar-brand { font-size: 1.15rem; }
+  .sidebar hr { display: none; }
+
+  .page-head { margin-bottom: 1.9rem; }
+  h1.page-title { font-size: 2.1rem; }
+
+  .nav-toggle {
+    display: block;
+    position: absolute;
+    right: 1.25rem;
+    top: 1.1rem;
+    background: transparent;
+    border: 1px solid var(--sidebar-rule);
+    border-radius: 4px;
+    padding: .35rem .65rem;
+    font-family: var(--sans);
+    font-size: .82rem;
+    color: var(--sidebar-strong);
+    cursor: pointer;
+  }
+
+  nav.site-nav { display: none; margin-top: 1rem; }
+  nav.site-nav.open { display: block; }
+
+  .sidebar-foot { display: none; }
+
+  h1 { font-size: 1.8rem; }
+  main { padding: 2.25rem 1.25rem 3rem; }
+  .footer-inner { padding: 1.5rem 1.25rem 2.5rem; }
+
+  .portrait { float: none; width: 150px; margin: 0 0 1.5rem; }
+  .vuw-logo { width: 200px; max-width: 60%; margin: 0 0 1.5rem auto; }
+
+  /* Keep the three across, but let the tiles shrink to fit a phone. */
+  .badges { gap: .6rem; }
+  .badges a { width: 100%; max-width: 124px; height: 74px; padding: .6rem; }
+  .figure-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* A phone column is too narrow to justify cleanly — too few words per line
+     for the spacing to even out. Fall back to ragged-right. */
+  .content p,
+  .content li,
+  .content dd,
+  .epigraph p {
+    text-align: left;
+  }
+}
+
+@media print {
+  .sidebar, .site-footer { display: none; }
+  .layout { display: block; }
+  body { font-size: 11pt; }
+  main { max-width: none; padding: 0; }
+  a { color: inherit; border: 0; }
+}

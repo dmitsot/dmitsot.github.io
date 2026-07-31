@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Academic Genealogy &middot; Dimitrios Mitsotakis</title>
+<meta name="description" content="Academic genealogy of Dimitrios Mitsotakis.">
+<meta property="og:title" content="Dimitrios Mitsotakis &ndash; Academic Genealogy">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Academic genealogy of Dimitrios Mitsotakis.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<div class="layout">
+
+  <header class="sidebar">
+    <div class="sidebar-inner">
+      <p class="sidebar-brand"><a href="index.html">Dimitrios Mitsotakis</a></p>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="sitenav">Menu</button>
+      <hr>
+      <nav class="site-nav" id="sitenav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">About me</a></li>
+        <li><a href="wave-phenomena.html">Wave Phenomena</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="computational-mathematics.html">Computational Mathematics</a></li>
+        <li><a href="software.html">Software</a></li>
+        <li><a href="academic-genealogy.html" aria-current="page">Academic Genealogy</a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-foot">
+        <p><a href="mailto:dmitsot@gmail.com">Contact me</a></p>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-col">
+    <main id="main" class="content">
+
+      <header class="page-head">
+        <h1 class="page-title">Academic Genealogy</h1>
+      </header>
+
+  <blockquote class="epigraph">
+    <p>There is no authority who decides what is a good idea.</p>
+    <cite>Richard Feynman</cite>
+  </blockquote>
+
+  <figure>
+    <img src="assets/images/academic-genealogy.png"
+         alt="Academic genealogy tree of Dimitrios Mitsotakis">
+  </figure>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>Note: the PDF files linked from this website are preprint versions and may
+        differ from the published articles &mdash;
+        <a href="mailto:dmitsot@gmail.com">contact me</a>.</p>
+      </div>
+    </footer>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var btn = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('sitenav');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+
+/* Until assets/images/ is populated, show a note instead of a broken image. */
+document.addEventListener('error', function (e) {
+  var img = e.target;
+  if (!img || img.tagName !== 'IMG' || img.dataset.handled) return;
+  img.dataset.handled = '1';
+  var note = document.createElement('span');
+  note.className = 'asset-missing';
+  note.textContent = 'Image not downloaded yet: ' + img.getAttribute('src');
+  img.replaceWith(note);
+}, true);
+</script>
+</body>
+</html>

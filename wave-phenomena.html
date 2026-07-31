@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wave Phenomena &middot; Dimitrios Mitsotakis</title>
+<meta name="description" content="Nonlinear and dispersive water waves: Euler, KdV, BBM, Peregrine and Boussinesq systems, with their theory and numerical analysis.">
+<meta property="og:title" content="Dimitrios Mitsotakis &ndash; Wave Phenomena">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Nonlinear and dispersive water waves: Euler, KdV, BBM, Peregrine and Boussinesq systems, with their theory and numerical analysis.">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    // Shorthands used in Dimitrios' papers, so LaTeX can be pasted in as written.
+    macros: {
+      Div: '\\nabla\\cdot',
+      bu:  '\\mathbf{u}',
+      bx:  '\\mathbf{x}',
+      bn:  '\\mathbf{n}'
+    }
+  }
+};
+</script>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<div class="layout">
+
+  <header class="sidebar">
+    <div class="sidebar-inner">
+      <p class="sidebar-brand"><a href="index.html">Dimitrios Mitsotakis</a></p>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="sitenav">Menu</button>
+      <hr>
+      <nav class="site-nav" id="sitenav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">About me</a></li>
+        <li><a href="wave-phenomena.html" aria-current="page">Wave Phenomena</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="computational-mathematics.html">Computational Mathematics</a></li>
+        <li><a href="software.html">Software</a></li>
+        <li><a href="academic-genealogy.html">Academic Genealogy</a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-foot">
+        <p><a href="mailto:dmitsot@gmail.com">Contact me</a></p>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-col">
+    <main id="main" class="content">
+
+      <header class="page-head">
+        <h1 class="page-title">Wave Phenomena</h1>
+      </header>
+
+  <blockquote class="epigraph">
+    <p>The next waves of interest that are easily seen by everyone, and which are usually
+    used as an example of waves in elementary courses, are water waves. As we shall soon
+    see, they are the worst possible example, because they are in no respect like sound
+    and light; they have all the complications that waves can have.</p>
+    <cite>Richard Feynman</cite>
+  </blockquote>
+
+  <p>Gravity water waves, such as tsunamis and solitary waves, are
+  <a href="http://www.scholarpedia.org/article/Linear_and_nonlinear_waves" target="_blank" rel="noopener">nonlinear</a>
+  and
+  <a href="https://en.wikipedia.org/wiki/Dispersion_%28water_waves%29" target="_blank" rel="noopener">dispersive</a>.
+  They are nonlinear because the interactions among them or with boundaries are
+  inelastic, and dispersive because waves of different amplitudes and wavelengths
+  propagate at different speeds. This complexity makes water wave equations more
+  complicated than other nonlinear or linear, non-dispersive waves. However, in certain
+  studies of water waves, non-dispersive wave equations are used to simplify the
+  analysis, just as we use Newton's law of universal gravitation instead of Einstein's
+  general theory of relativity whenever possible. Water wave equations, derived from
+  first principles such as mass and momentum conservation laws, are partial differential
+  equations. The fundamental water wave equations are known as the
+  <a href="https://en.wikipedia.org/wiki/Euler_equations_%28fluid_dynamics%29" target="_blank" rel="noopener">Euler
+  equations</a> and were derived by
+  <a href="https://en.wikipedia.org/wiki/Leonhard_Euler" target="_blank" rel="noopener">Leonard Euler</a> in 1757.
+  These equations can be written in the form</p>
+
+  <!-- Transcribed from the original equation image (assets/images/wave-euler-equations.png),
+       which is kept in the repo for reference. -->
+  <div class="eq">
+    \[ \mathbf{u}(\mathbf{x},z,t) = (u,v) \]
+
+    \[
+      \left.
+      \begin{aligned}
+        \mathbf{u}_t + (\mathbf{u}\cdot\nabla)\mathbf{u} + w\,\mathbf{u}_z
+          + \tfrac{1}{\rho}\nabla p &= 0 \\[2pt]
+        w_t + (\mathbf{u}\cdot\nabla)w + w\,w_z
+          + \tfrac{1}{\rho}p_z + g &= 0 \\[2pt]
+        \nabla\cdot\mathbf{u} + w_z &= 0 \\[2pt]
+        \nabla\times(\mathbf{u},w) =
+          \begin{pmatrix} w_y - v_z \\ u_z - w_x \\ v_x - u_y \end{pmatrix} &= 0
+      \end{aligned}
+      \right\}
+      \quad \text{for } -D &lt; z &lt; \eta(\mathbf{x},t)
+    \]
+
+    \[
+      \left.
+      \begin{aligned}
+        \eta_t + \mathbf{u}\cdot\nabla\eta &= 0 \\[2pt]
+        p &= p_{\mathrm{atm}}
+      \end{aligned}
+      \right\}
+      \quad \text{at } z = \eta(\mathbf{x},t)
+    \]
+
+    \[ \mathbf{u}\cdot\nabla(z+D) + w = 0 \quad \text{for } z = -D \]
+
+    \[ \eta,\ \mathbf{u},\ w \quad \text{given at } t = 0 \]
+  </div>
+
+  <p>The particular problem is extremely challenging to solve both theoretically and
+  numerically. It is so difficult that no known numerical method has been proven to
+  converge for any of its initial-boundary value problems thus far. The well-posedness
+  theory of Euler's equations is also limited to unbounded domains only. Given their
+  complexity, much of the research on water waves focuses on deriving simplified
+  equations. These simplified equations are based on assumptions that aim to simplify
+  the analysis, such as the long wave assumption. This is because waves of significant
+  interest, such as
+  <a href="https://en.wikipedia.org/wiki/John_Scott_Russell#Solitary_wave_%28water_waves%29" target="_blank" rel="noopener">solitary
+  waves</a> and <a href="https://en.wikipedia.org/wiki/Tsunami" target="_blank" rel="noopener">tsunamis</a>, are
+  typically very long waves with small amplitudes compared to the water depth. Due to
+  these two important characteristics, these waves can be considered weakly nonlinear
+  and weakly dispersive in asymptotic terms. The first derived simplified equation for
+  describing such waves is known as the
+  <a href="https://en.wikipedia.org/wiki/Korteweg%E2%80%93De_Vries_equation" target="_blank" rel="noopener">Korteweg-de
+  Vries (KdV) equation</a>.
+  <a href="https://en.wikipedia.org/wiki/Joseph_Valentin_Boussinesq" target="_blank" rel="noopener">Joseph Valentin
+  Boussinesq</a> derived the KdV equation in 1877 (along with other equations known as
+  Boussinesq equations), and it was also independently derived by
+  <a href="https://en.wikipedia.org/wiki/Diederik_Korteweg" target="_blank" rel="noopener">Diederik Korteweg</a> and
+  <a href="https://en.wikipedia.org/wiki/Gustav_de_Vries" target="_blank" rel="noopener">Gustav de Vries</a> in 1895.
+  The KdV equation is a nonlinear and dispersive equation given by:</p>
+
+  <!-- The original equation image on the Google Site was no longer rendering.
+       Typeset below in MathJax — please verify it matches your notation. -->
+  <div class="eq">
+    \[
+      \eta_t + c_0\eta_x + \frac{3c_0}{2h}\,\eta\eta_x
+      + \frac{c_0 h^2}{6}\,\eta_{xxx} = 0 ,
+    \]
+  </div>
+
+  <p>where the linear speed of propagation is denoted by</p>
+
+  <div class="eq">
+    \[ c_0 = \sqrt{gh}. \]
+  </div>
+
+  <p>Although the KdV equation is an
+  <a href="https://en.wikipedia.org/wiki/Integrable_system" target="_blank" rel="noopener">integrable equation</a>, it
+  is not an accurate physical model for water waves. For instance, the interaction of
+  its solitary waves is elastic, while numerical evidence suggests that this is not true
+  in the Euler equations. Therefore, the KdV equation can be misleading in the physical
+  and dynamic description of water waves. Additionally, the KdV equation becomes very
+  complicated and impractical when used in bounded domains. This is because it requires
+  a different number of boundary conditions on each side of the domain. Furthermore, the
+  KdV equation cannot accurately describe wave reflections. Extensive work on boundary
+  value problems of the KdV equation has been carried out by
+  <a href="https://en.wikipedia.org/wiki/Athanassios_S._Fokas" target="_blank" rel="noopener">A. Fokas</a>, who
+  introduced a new transform method to solve linear differential equations in bounded
+  and semi-bounded domains.</p>
+
+  <p>For these reasons, a team led by
+  <a href="https://en.wikipedia.org/wiki/Brooke_Benjamin" target="_blank" rel="noopener">B. Benjamin</a>, FRS, and
+  consisting of B. Barnard,
+  <a href="https://en.wikipedia.org/wiki/Jerry_L._Bona" target="_blank" rel="noopener">J. Bona</a>,
+  <a href="https://www.science.org.au/fellowship/fellows/biographical-memoirs-1/john-joseph-mahony-1929-1992" target="_blank" rel="noopener">J. Mahony</a>,
+  B. Pritchard, R. Smith and
+  <a href="https://en.wikipedia.org/wiki/John_Toland_%28mathematician%29" target="_blank" rel="noopener">J. Toland</a>,
+  FRS, focused on studying the Euler equations and in deriving simplified model equations
+  such as the
+  <a href="https://en.wikipedia.org/wiki/Benjamin%E2%80%93Bona%E2%80%93Mahony_equation" target="_blank" rel="noopener">BBM
+  (Benjamin-Bona-Mahony) equation</a>:</p>
+
+  <!-- Original equation image no longer rendering on the Google Site; typeset below. -->
+  <div class="eq">
+    \[
+      \eta_t + c_0\eta_x + \frac{3c_0}{2h}\,\eta\eta_x
+      - \frac{h^2}{6}\,\eta_{xxt} = 0 .
+    \]
+  </div>
+
+  <p>The BBM equation, also known as the
+  <a href="https://en.wikipedia.org/wiki/Benjamin%E2%80%93Bona%E2%80%93Mahony_equation" target="_blank" rel="noopener">regularized
+  long-wave equation</a>, was derived by
+  <a href="https://en.wikipedia.org/wiki/Howell_Peregrine" target="_blank" rel="noopener">H. Peregrine</a>, FRS, for
+  similar reasons as the team led by B. Benjamin. They aimed to study water waves
+  propagating over a flat bottom. The team led by B. Benjamin derived and analyzed
+  equations, and later on, various other authors focused on deriving mathematically and
+  physically acceptable equations, primarily for the case of horizontal bottom
+  topography.</p>
+
+  <p>According to <a href="https://en.wikipedia.org/wiki/Vladimir_Arnold" target="_blank" rel="noopener">V. Arnold</a>,
+  acceptable deterministic equations must adhere to Newton's principle of determinacy,
+  which states that the initial state of a mechanical system (the positions and
+  velocities of its points at a specific moment in time) uniquely determines its entire
+  motion. This concept was further developed in mathematical terms by
+  <a href="https://en.wikipedia.org/wiki/Jacques_Hadamard" target="_blank" rel="noopener">J. Hadamard</a>, who
+  introduced the notion of
+  <a href="https://en.wikipedia.org/wiki/Well-posed_problem" target="_blank" rel="noopener">well-posedness</a> of
+  partial differential equations. (Note that the Wikipedia link contains a wrong example,
+  so please ignore the details.) Well-posedness refers to the conditions where the
+  initial and boundary conditions are equally important for determining the physical
+  state of the system. The systems derived in the works, particularly authored by
+  J. Bona, contain detailed proofs of well-posedness in bounded or unbounded domains and
+  other forms of theoretical justification.</p>
+
+  <p>On the other hand, with practical applications in mind, H. Peregrine was the one who
+  derived the first useful system in 1967 for describing the propagation of long waves of
+  small amplitude over variable topography, known as the Peregrine system. The first
+  equation in the system represents the mass conservation, while the second equation is
+  an approximation of the momentum conservation:</p>
+
+  <!-- Original equation image no longer rendering on the Google Site; typeset below. -->
+  <div class="eq">
+    \[
+      \begin{aligned}
+        \eta_t + \nabla\cdot\big[(h+\eta)\,\mathbf{u}\big] &= 0 ,\\[2pt]
+        \mathbf{u}_t + g\nabla\eta + (\mathbf{u}\cdot\nabla)\mathbf{u}
+          &= \frac{h}{2}\,\nabla\big[\nabla\cdot(h\,\mathbf{u}_t)\big]
+           - \frac{h^{2}}{6}\,\nabla\big[\nabla\cdot\mathbf{u}_t\big] .
+      \end{aligned}
+    \]
+  </div>
+
+  <p>Peregrine's system has proven to be very useful in engineering applications and has
+  contributed to a better understanding of the relevant physics of water waves. However,
+  the supporting theory of well-posedness, particularly in bounded domains, remains
+  incomplete. Additionally, solutions to the Peregrine system do not preserve any
+  reasonable form of the total energy. This issue is generally observed in many
+  Boussinesq-type systems. Furthermore, these systems often violate fundamental laws of
+  physics, such as Galilean invariance and positivity of solutions. This situation leads
+  to what can be described as an
+  <a href="https://en.m.wikipedia.org/wiki/Paul_Feyerabend#Nature_of_scientific_method" target="_blank" rel="noopener">epistemological
+  anarchism</a>, where equations derived to describe physical phenomena do not obey the
+  laws of mathematics and physics.</p>
+
+  <p>Although Boussinesq systems cannot be considered as first principles, it is crucial
+  for them to inherit as much physics as possible to ensure their physical relevance
+  compared to the Euler equations. One example of significant importance is the problem
+  of dispersive long-wave runup, where the linear dispersion relation can only be
+  physically meaningful at different altitudes if the governing equations are invariant
+  under vertical translations. Otherwise, the fluid velocity would be incorrect. This was
+  demonstrated for the first time in
+  <a href="https://www.sciencedirect.com/science/article/pii/S0021999111000118?via%3Dihub" target="_blank" rel="noopener">[DKM]</a>
+  through a simple example involving two lakes at different altitudes.</p>
+
+  <p>Another notable system extensively used in applications is the extended Boussinesq
+  system proposed by
+  <a href="https://www.researchgate.net/profile/Okey-Nwogu" target="_blank" rel="noopener">O. Nwogu</a>, which exhibits
+  optimal linear dispersion characteristics.</p>
+
+  <p>Although the extended Boussinesq system has been widely used in the study of
+  nonlinear and dispersive waves, it shares the same limitations as the Peregrine system
+  in terms of missing certain pieces of information.</p>
+
+  <p>In addition to the two notable and useful systems mentioned earlier, several other
+  systems have been derived. However, all of them lack an appropriate supporting theory
+  to maintain the laws of physics and mathematics. Despite being proper asymptotic
+  approximations to the Euler equations and expected to describe the same phenomena with
+  similar accuracy, these systems are deemed unacceptable and physically irrelevant for
+  describing water waves.</p>
+
+  <p>One such system is the KdV-KdV system, which has been proven in
+  <a href="https://www.sciencedirect.com/science/article/pii/S0378475406002643?via%3Dihub" target="_blank" rel="noopener">[BDM1]</a>
+  and
+  <a href="https://iopscience.iop.org/article/10.1088/0951-7715/21/12/006" target="_blank" rel="noopener">[BDM2]</a> to
+  be unable to accurately describe solitary waves as they appear in the Euler equations
+  of water wave theory. The KdV-KdV system exhibits traveling waves with small periodic
+  orbits, resulting in infinite energy (homoclinic to periodic orbits).</p>
+
+  <p>On the other hand, the BBM-BBM system, which is asymptotically equivalent to the
+  KdV-KdV system, possesses all the desirable properties one would expect from model
+  equations describing water waves. This suggests that asymptotic analysis alone cannot
+  justify the validity of physical models.</p>
+
+  <p>Focusing our research on developing useful and justified systems, as well as
+  justified numerical methods for water wave problems, we have made significant progress
+  in establishing theoretical and numerical foundations for the analysis of
+  initial-boundary value problems involving nonlinear and dispersive wave equations. This
+  research has enabled us to identify one Boussinesq system, among many others, that
+  incorporates variable bottom topography and has been proven (thus far) to be well-posed
+  according to Hadamard's criteria (adhering to Newton's principle of determinacy) when
+  slip-wall boundary conditions are applied at the domain boundaries. Additionally, this
+  system possesses the crucial physical property of conserving energy, similar to its
+  non-dispersive counterpart. This simplified system can be expressed in the following
+  form:</p>
+
+  <div class="eq">
+    \[
+      \begin{aligned}
+        &\eta_t+\Div [(D+\eta)\bu]-b\Div\left\{D^2\nabla\eta_t\right\}=0\ ,\\
+        &\bu_t+g\nabla\eta+\tfrac{1}{2}\nabla|\bu|^2
+          -\nabla\left\{cg\Div(D^2\nabla\eta)+b\Div(D^2\bu_t)\right\}=0\ ,
+      \end{aligned}
+    \]
+  </div>
+
+  <p>where</p>
+
+  <div class="eq">
+    \[
+      b=\frac{3\theta^2-1}{6}&gt;0, \quad c=\frac{3\theta^2-2}{3}&gt; 0
+      \quad \text{and}\quad  \frac{2}{3}&lt;\theta^2\leq 1\ .
+    \]
+  </div>
+
+  <p>This Boussinesq system, which satisfies well-posedness criteria and energy
+  conservation, was initially derived in the work
+  <a href="https://doi.org/10.1016/j.jcp.2020.109579" target="_blank" rel="noopener">[KMS]</a>, and further detailed
+  investigations were conducted in
+  <a href="https://iopscience.iop.org/article/10.1088/1361-6544/ac3c29" target="_blank" rel="noopener">[IKKM]</a>,
+  <a href="https://doi.org/10.1007/s10915-024-02742-8" target="_blank" rel="noopener">[AM]</a>,
+  <a href="https://doi.org/10.1098/rspa.2023.0191" target="_blank" rel="noopener">[IKM]</a>. These
+  publications, along with our other works
+  <a href="https://www.esaim-m2an.org/articles/m2an/abs/2007/05/m2an0639/m2an0639.html" target="_blank" rel="noopener">[DMS1]</a>,
+  <a href="http://www.aimsciences.org/article/doi/10.3934/dcds.2009.23.1191" target="_blank" rel="noopener">[DMS2]</a>,
+  <a href="https://link.springer.com/article/10.1007/s10915-010-9368-z" target="_blank" rel="noopener">[DMS3]</a>,
+  <a href="https://projecteuclid.org/journals/advances-in-differential-equations/volume-14/issue-1_2f_2/Initial-boundary-value-problems-for-the-Bona-Smith-family-of/ade/1355867277.full#info" target="_blank" rel="noopener">[ADM1]</a>,
+  <a href="https://www.sciencedirect.com/science/article/pii/S0168927409000506" target="_blank" rel="noopener">[ADM2]</a>
+  represent a valuable contribution to the literature as they provide both theoretical
+  and numerical analysis frameworks for addressing water wave problems in bounded
+  domains. These works specifically consider various boundary conditions such as slip
+  wall, non-slip wall, periodic, wavemaker, and other artificial conditions.</p>
+
+  <h2>References</h2>
+
+  <dl class="refs">
+    <dt>[BDM1]</dt>
+    <dd>J. Bona, V. Dougalis, D. Mitsotakis, Numerical solution of KdV-KdV systems of
+    Boussinesq equations: I. The numerical scheme and generalized solitary waves,
+    <em>Mat. Comp. Simul.</em>, 74 (2007), 214&ndash;228,
+    <a href="http://dx.doi.org/10.1016/j.matcom.2006.10.004" target="_blank" rel="noopener">DOI:10.1016/j.matcom.2006.10.004</a>
+    (<a href="https://www.researchgate.net/publication/222430382_Numerical_solution_of_KdV-KdV_systems_of_Boussinesq_equations_I_The_numerical_scheme_and_generalized_solitary_waves" target="_blank" rel="noopener">PDF</a>)</dd>
+
+    <dt>[BDM2]</dt>
+    <dd>J. Bona, V. Dougalis, D. Mitsotakis, Numerical solution of KdV-KdV systems of
+    Boussinesq equations: II. Generation and evolution of radiating solitary waves,
+    <em>Nonlinearity</em>, 21 (2008), 2825&ndash;2848,
+    <a href="http://dx.doi.org/10.1088/0951-7715/21/12/006" target="_blank" rel="noopener">DOI:10.1088/0951-7715/21/12/006</a>
+    (<a href="https://www.researchgate.net/publication/230952867_Numerical_solution_of_Boussinesq_systems_of_KdV-KdV_type_II_Evolution_of_radiating_solitary_waves" target="_blank" rel="noopener">PDF</a>)</dd>
+
+    <dt>[DKM]</dt>
+    <dd>D. Dutykh, T. Katsaounis, D. Mitsotakis, Finite volume schemes for dispersive
+    wave propagation and run-up, <em>Journal of Computational Physics</em>, 230 (2011),
+    3035&ndash;3061,
+    <a href="http://dx.doi.org/10.1016/j.jcp.2011.01.003" target="_blank" rel="noopener">DOI:10.1016/j.jcp.2011.01.003</a>
+    (<a href="http://hal.archives-ouvertes.fr/hal-00472431/fr/" target="_blank" rel="noopener">PDF</a>)</dd>
+
+    <dt>[IKKM]</dt>
+    <dd>S. Israwi, H. Kalisch, T. Katsaounis, D. Mitsotakis, A regularized shallow-water
+    waves system with slip-wall boundary conditions in a basin: Theory and numerical
+    analysis, <em>Nonlinearity</em>, 35 (2022), 750&ndash;786,
+    <a href="https://iopscience.iop.org/article/10.1088/1361-6544/ac3c29" target="_blank" rel="noopener">DOI:10.1088/1361-6544/ac3c29</a>
+    (<a href="https://arxiv.org/abs/2008.10754" target="_blank" rel="noopener">PDF</a>)</dd>
+
+    <dt>[AM]</dt>
+    <dd>D. Antonopoulos, D. Mitsotakis, Bona-Smith-type systems in bounded domains with
+    slip-wall boundary conditions: Theoretical justification and a conservative numerical
+    scheme, <em>Journal of Scientific Computing</em>, 102 (2025),
+    <a href="https://doi.org/10.1007/s10915-024-02742-8" target="_blank" rel="noopener">DOI:10.1007/s10915-024-02742-8</a>
+    (<a href="https://arxiv.org/abs/2405.00422" target="_blank" rel="noopener">PDF</a>)</dd>
+
+    <dt>[IKM]</dt>
+    <dd>S. Israwi, Y. Khalifeh, D. Mitsotakis, Equations for small amplitude shallow water
+    waves over small bathymetric variations, <em>Proc. R. Soc. A</em>, 479 (2023), 20230191,
+    <a href="https://doi.org/10.1098/rspa.2023.0191" target="_blank" rel="noopener">DOI:10.1098/rspa.2023.0191</a>
+    (<a href="https://arxiv.org/abs/2303.11556" target="_blank" rel="noopener">PDF with corrections</a>)</dd>
+
+    <dt>[KMS]</dt>
+    <dd>T. Katsaounis, D. Mitsotakis, G. Sadaka, Boussinesq-Peregrine water wave models
+    and their numerical approximation, <em>J. Comp. Phys.</em>, 417 (2020), 109579,
+    <a href="https://doi.org/10.1016/j.jcp.2020.109579" target="_blank" rel="noopener">DOI:10.1016/j.jcp.2020.109579</a>
+    (<a href="https://arxiv.org/pdf/2005.09679.pdf" target="_blank" rel="noopener">PDF</a>)</dd>
+
+    <dt>[DMS1]</dt>
+    <dd>V. Dougalis, D. Mitsotakis, J.-C. Saut, On some Boussinesq systems in two space
+    dimensions: Theory and numerical analysis, <em>Math. Model. Num. Anal.</em>, 41
+    (2007), 825&ndash;854,
+    <a href="http://dx.doi.org/10.1051/m2an:2007043" target="_blank" rel="noopener">DOI:10.1051/m2an:2007043</a>
+    (<a href="https://www.researchgate.net/publication/43293327_On_some_Boussinesq_systems_in_two_space_dimensions_theory_and_numerical_analysis" target="_blank" rel="noopener">PDF</a>)</dd>
+
+    <dt>[DMS2]</dt>
+    <dd>V. Dougalis, D. Mitsotakis, J.-C. Saut, On initial-boundary value problems for a
+    Boussinesq system of BBM-BBM type in a plane domain,
+    <em>Discrete Contin. Dyn. Syst.</em>, 23 (2009), 1191&ndash;1204,
+    <a href="http://www.aimsciences.org/article/doi/10.3934/dcds.2009.23.1191" target="_blank" rel="noopener">DOI:10.3934/dcds.2009.23.1191</a>
+    (<a href="https://www.researchgate.net/publication/253641956_On_initial-boundary_value_problems_for_a_Boussinesq_system_of_BBM-BBM_type_in_a_plane_domain" target="_blank" rel="noopener">PDF</a>)</dd>
+
+    <dt>[DMS3]</dt>
+    <dd>V. Dougalis, D. Mitsotakis, J.-C. Saut, Initial-boundary-value problems for
+    Boussinesq systems of Bona-Smith type on a plain domain: theory and numerical
+    analysis, <em>J. Sci. Comput.</em>, 44 (2010), 109&ndash;135,
+    <a href="https://doi.org/10.1007/s10915-010-9368-z" target="_blank" rel="noopener">DOI:10.1007/s10915-010-9368-z</a>
+    (<a href="https://arxiv.org/abs/0907.4918" target="_blank" rel="noopener">PDF</a>)</dd>
+
+    <dt>[ADM1]</dt>
+    <dd>D. Antonopoulos, V. Dougalis, D. Mitsotakis, Initial-boundary value problems for
+    the Bona-Smith family of Boussinesq systems,
+    <em>Adv. Differential Equations</em>, 14 (2009), 27&ndash;53,
+    <a href="https://projecteuclid.org/euclid.ade/1355867277#info" target="_blank" rel="noopener">1171.35457</a>
+    (<a href="https://hal.archives-ouvertes.fr/hal-00371940/document" target="_blank" rel="noopener">PDF</a>)</dd>
+
+    <dt>[ADM2]</dt>
+    <dd>D. Antonopoulos, V. Dougalis, D. Mitsotakis, Numerical solution of Boussinesq
+    systems of the Bona-Smith family, <em>Appl. Numer. Math.</em>, 30 (2010),
+    314&ndash;336,
+    <a href="http://www.sciencedirect.com/science/article/pii/S0168927409000506" target="_blank" rel="noopener">DOI:10.1016/j.apnum.2009.03.002</a>
+    (<a href="https://hal.archives-ouvertes.fr/hal-00371943v2" target="_blank" rel="noopener">PDF</a>)</dd>
+  </dl>
+
+  <h2><a href="gallery.html">Gallery of Waves</a></h2>
+
+  <figure>
+    <img src="assets/images/wave-phenomena-figure.png" alt="">
+  </figure>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>Note: the PDF files linked from this website are preprint versions and may
+        differ from the published articles &mdash;
+        <a href="mailto:dmitsot@gmail.com">contact me</a>.</p>
+      </div>
+    </footer>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var btn = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('sitenav');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+
+/* Until assets/images/ is populated, show a note instead of a broken image. */
+document.addEventListener('error', function (e) {
+  var img = e.target;
+  if (!img || img.tagName !== 'IMG' || img.dataset.handled) return;
+  img.dataset.handled = '1';
+  var note = document.createElement('span');
+  note.className = 'asset-missing';
+  note.textContent = 'Image not downloaded yet: ' + img.getAttribute('src');
+  img.replaceWith(note);
+}, true);
+</script>
+</body>
+</html>

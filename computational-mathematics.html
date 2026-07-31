@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Computational Mathematics &middot; Dimitrios Mitsotakis</title>
+<meta name="description" content="Computational Mathematics: An Introduction to Numerical Analysis and Scientific Computing with Python.">
+<meta property="og:title" content="Dimitrios Mitsotakis &ndash; Computational Mathematics">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Computational Mathematics: An Introduction to Numerical Analysis and Scientific Computing with Python.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<div class="layout">
+
+  <header class="sidebar">
+    <div class="sidebar-inner">
+      <p class="sidebar-brand"><a href="index.html">Dimitrios Mitsotakis</a></p>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="sitenav">Menu</button>
+      <hr>
+      <nav class="site-nav" id="sitenav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">About me</a></li>
+        <li><a href="wave-phenomena.html">Wave Phenomena</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="computational-mathematics.html" aria-current="page">Computational Mathematics</a></li>
+        <li><a href="software.html">Software</a></li>
+        <li><a href="academic-genealogy.html">Academic Genealogy</a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-foot">
+        <p><a href="mailto:dmitsot@gmail.com">Contact me</a></p>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-col">
+    <main id="main" class="content">
+
+      <header class="page-head">
+        <h1 class="page-title">Computational Mathematics with Python</h1>
+      </header>
+
+  <blockquote class="epigraph">
+    <p>I learned very early the difference between knowing the name of something and
+    knowing something.</p>
+    <cite>Richard Feynman</cite>
+  </blockquote>
+
+  <figure>
+    <img src="assets/images/computational-mathematics-cover.png"
+         alt="Cover of Computational Mathematics: An Introduction to Numerical Analysis and Scientific Computing with Python">
+  </figure>
+
+  <p>Computational mathematics is a branch of applied mathematics that focuses on solving
+  mathematical problems using computers. It encompasses numerical modeling, the
+  development and validation of numerical methods, and conducting numerical simulations.
+  Given the ubiquitous presence of computers in modern science, a solid understanding of
+  this subject is essential. If you are studying the theory and practice of scientific
+  computations and numerical analysis, you will find the book <em>Computational
+  Mathematics: An Introduction to Numerical Analysis and Scientific Computing with
+  Python</em> to be highly beneficial. This book serves as an educational resource for
+  students and researchers who are eager to swiftly and comprehensively learn one of the
+  most powerful programming languages, as well as explore the fundamental tools and
+  methods of computational mathematics. Within this book, you will encounter proofs and
+  techniques that are not commonly found in traditional numerical analysis textbooks,
+  accompanied by straightforward implementations in Python. It is suitable for students
+  in natural sciences and engineering fields. Additionally, the book covers advanced
+  topics, including an introduction to neural networks and eigenvalue problems, with
+  practical applications to search engines.</p>
+
+  <p>Most of the computer code can be downloaded as Jupyter notebooks from
+  <a href="https://github.com/dmitsot/computational_mathematics" target="_blank" rel="noopener">GitHub</a>.</p>
+
+  <p>You can find more information by visiting
+  <a href="https://www.routledge.com/Computational-Mathematics-An-introduction-to-Numerical-Analysis-and-Scientific/Mitsotakis/p/book/9781032262390" target="_blank" rel="noopener">Taylor
+  &amp; Francis Group</a>,
+  <a href="https://www.amazon.com/Computational-Mathematics-introduction-Numerical-Scientific/dp/1032262397" target="_blank" rel="noopener">Amazon</a>
+  or
+  <a href="https://www.google.co.nz/books/edition/Computational_Mathematics/V3DBEAAAQBAJ?hl=en&amp;gbpv=0" target="_blank" rel="noopener">Google
+  Books</a>.</p>
+
+  <p><a href="https://drive.google.com/file/d/1t3p3UBGr0CWJRltPEXhogxGSOSFnykZe/view?usp=share_link" target="_blank" rel="noopener">Click
+  here for the most updated errata.</a></p>
+
+  <p>Please do not hesitate to
+  <a href="mailto:dmitsot@gmail.com">contact me</a> for comments, corrections and
+  suggestions.</p>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>Note: the PDF files linked from this website are preprint versions and may
+        differ from the published articles &mdash;
+        <a href="mailto:dmitsot@gmail.com">contact me</a>.</p>
+      </div>
+    </footer>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var btn = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('sitenav');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+
+/* Until assets/images/ is populated, show a note instead of a broken image. */
+document.addEventListener('error', function (e) {
+  var img = e.target;
+  if (!img || img.tagName !== 'IMG' || img.dataset.handled) return;
+  img.dataset.handled = '1';
+  var note = document.createElement('span');
+  note.className = 'asset-missing';
+  note.textContent = 'Image not downloaded yet: ' + img.getAttribute('src');
+  img.replaceWith(note);
+}, true);
+</script>
+</body>
+</html>
