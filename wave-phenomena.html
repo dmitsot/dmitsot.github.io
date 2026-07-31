@@ -88,7 +88,8 @@ window.MathJax = {
   These equations can be written in the form</p>
 
   <!-- Transcribed from the original equation image (assets/images/wave-euler-equations.png),
-       which is kept in the repo for reference. -->
+       which is kept in the repo for reference. Note: the image gave the kinematic
+       free-surface condition as "= 0"; that was an error and is corrected to "= w" here. -->
   <div class="eq">
     \[ \mathbf{u}(\mathbf{x},z,t) = (u,v) \]
 
@@ -110,7 +111,7 @@ window.MathJax = {
     \[
       \left.
       \begin{aligned}
-        \eta_t + \mathbf{u}\cdot\nabla\eta &= 0 \\[2pt]
+        \eta_t + \mathbf{u}\cdot\nabla\eta &= w \\[2pt]
         p &= p_{\mathrm{atm}}
       \end{aligned}
       \right\}

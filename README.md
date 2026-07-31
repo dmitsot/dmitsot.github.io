@@ -65,28 +65,24 @@ it is deleted the original CDN URLs stop resolving.
 
 ## Things to check
 
-Two items need your eye before this goes live.
-
-**Equations.** Every equation on `wave-phenomena.html` is now MathJax rather than
-an image. They fall into three groups:
+**Equations.** Every equation on `wave-phenomena.html` is MathJax rather than an
+image. They fall into three groups:
 
 1. *Transcribed from the original image.* The Euler system was read off
    `assets/images/wave-euler-equations.png`, which is kept in `assets/images/`
-   for comparison. One thing to check: the image gives the kinematic free-surface
-   condition as \(\eta_t + \mathbf{u}\cdot\nabla\eta = 0\), whereas the usual
-   statement has \(w\) on the right-hand side. It has been transcribed exactly as
-   drawn, so if that was a slip in the original it is still there.
-2. *Standard forms, reconstructed.* KdV, BBM, Peregrine and Nwogu's extended
-   Boussinesq system — their images had already stopped rendering on the live
-   Google Site. These are the standard published forms, not transcriptions, so
-   check them against your own notation and normalisation. The two displayed
-   equations on `software-cs-newton.html` are in the same category.
-3. *Not reconstructed.* The regularised, energy-conserving system from [KMS] is
-   your own result, so it has been left out rather than guessed at. The paragraph
-   reads perfectly well without a displayed equation.
+   for comparison. One correction was made: the image gave the kinematic
+   free-surface condition as \(\eta_t + \mathbf{u}\cdot\nabla\eta = 0\), which
+   was an error in the original; it now reads \(= w\). Verified 2026.
+2. *Standard forms, reconstructed.* KdV, BBM and Peregrine — their images had
+   already stopped rendering on the live Google Site, so these are the standard
+   published forms rather than transcriptions. Still worth checking against your
+   own notation and normalisation. The two displayed equations on
+   `software.html` (complex-step Newton) are in the same category.
+3. *Supplied directly.* The regularised, energy-conserving system from [KMS] and
+   its coefficients were provided by the author and are typeset verbatim.
 
-Anything needing your eye is marked with a grey note in the page — search the
-HTML for `eq-note`.
+The MathJax config defines `\Div`, `\bu`, `\bx` and `\bn` as macros, so LaTeX
+using those shorthands can be pasted in unchanged.
 
 MathJax is loaded from a CDN on this page and on `software-cs-newton.html` only.
 
