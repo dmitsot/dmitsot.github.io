@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Software &middot; Dimitrios Mitsotakis</title>
-<meta name="description" content="Open-source code: tsunami travel-time estimation and the complex-step Newton method.">
+<meta name="description" content="Open-source code: the FEMd finite element library, tsunami travel-time estimation and the complex-step Newton method.">
 <meta property="og:title" content="Dimitrios Mitsotakis &ndash; Software">
 <meta property="og:type" content="website">
-<meta property="og:description" content="Open-source code: tsunami travel-time estimation and the complex-step Newton method.">
+<meta property="og:description" content="Open-source code: the FEMd finite element library, tsunami travel-time estimation and the complex-step Newton method.">
 <link rel="canonical" href="https://www.dmitsotakis.com/software.html">
 <link rel="stylesheet" href="assets/css/style.css">
 <script>
@@ -204,6 +204,59 @@ window.MathJax = {
       2023,
       <a href="https://doi.org/10.1201/9781003287292" target="_blank" rel="noopener">DOI:10.1201/9781003287292</a></li>
     </ul>
+    </div>
+  </details>
+
+  <details class="section">
+    <summary><h2>Finite Element Library FEMd</h2></summary>
+    <div class="section-body">
+    <figure class="software-logo">
+      <img src="assets/images/femd-logo.jpg" alt="FEMd, Finite Element Library">
+    </figure>
+
+    <p>FEMd is a finite element library for partial differential equations in one and two
+    space dimensions. Its core is a header-only C++17 library that is used from Python. The
+    user provides a domain, a polynomial degree and boundary conditions, writes the
+    equations in weak form, and FEMd assembles and solves the discrete problem. The form
+    language follows the FEniCS project, so a weak formulation is written in code as it
+    reads on paper.</p>
+
+    <p>In one dimension the basis functions can be B-splines of any degree and continuity,
+    classical Lagrange elements or discontinuous Galerkin elements. Dirichlet, Neumann,
+    clamped, periodic and Robin boundary conditions are built into the basis, and banded,
+    cyclic and FFT solvers exploit the structure of the resulting matrices.</p>
+
+    <p>In two dimensions FEMd generates its own meshes. Its Delaunay mesh generator
+    guarantees a minimum angle and handles holes and boundary markers, and the meshes can
+    be refined locally, smoothed and coarsened. Structured meshes and meshes imported from
+    Gmsh are also supported. On these meshes the library provides continuous \(P_k\)
+    elements on triangles and \(Q_k\) elements on quadrilaterals of any degree, vector and
+    mixed spaces for problems such as the Stokes and Navier-Stokes equations,
+    Raviart-Thomas and N&eacute;d&eacute;lec elements, and discontinuous Galerkin methods
+    for conservation laws such as the shallow water equations. Solutions can be written to
+    VTK files and visualized in ParaView.</p>
+
+    <p>Nonlinear problems are solved with Newton's method using symbolic Jacobians, or with
+    Newton-Krylov methods based on the complex-step approximation of the Jacobian described
+    above. The library also includes sparse direct and iterative linear solvers, implicit
+    and explicit Runge-Kutta methods for time-dependent problems, and sparse eigenvalue
+    solvers.</p>
+
+    <p>As an example, the boundary value problem \(-u'' + u = f\) in \((0, 1)\) with
+    \(u(0) = 0\) and \(u(1) = 1\) is solved with cubic splines on 20 elements by</p>
+
+<pre><code>import numpy as np
+import femd as fd
+from femd import D, dx
+
+V = fd.SplineSpace(np.linspace(0, 1, 21), 3, bc="dirichlet", left=0.0, right=1.0)
+u, v = fd.TrialFunction(V), fd.TestFunction(V)
+f = (np.pi**2 + 1) * fd.sin(np.pi * fd.x) + fd.x
+uh = fd.solve(D(u) * D(v) * dx + u * v * dx, f * v * dx)</code></pre>
+
+    <p>The library, its manual, the API reference and example notebooks can be downloaded
+    from my <a href="https://github.com/dmitsot/FEMd" target="_blank" rel="noopener">GitHub
+    page</a>. It is released under the MIT License.</p>
     </div>
   </details>
     </main>
