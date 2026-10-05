@@ -219,8 +219,9 @@ window.MathJax = {
       <img src="assets/images/femd-logo.jpg" alt="FEMd, Finite Element Library">
     </figure>
 
-    <p>FEMd is a finite element library for partial differential equations in one and two
-    space dimensions. Its core is a header-only C++17 library that is used from Python. The
+    <p>FEMd is a finite element library for partial differential equations in one and two 
+    space dimensions, especially designed for running efficiently simulations on modern personal computers. 
+    Its core is a header-only C++17 library that is used from Python, and can be integrated with OpenMP for parallel computing. The
     user provides a domain, a polynomial degree and boundary conditions, writes the
     equations in weak form, and FEMd assembles and solves the discrete problem. The form
     language follows the FEniCS project, so a weak formulation is written in code as it
@@ -261,7 +262,7 @@ uh = fd.solve(D(u) * D(v) * dx + u * v * dx, f * v * dx)</code></pre>
 
     <p>The library, its manual, the API reference and example notebooks can be downloaded
     from my <a href="https://github.com/dmitsot/FEMd" target="_blank" rel="noopener">GitHub
-    page</a>. It is free software, released under the GNU General Public License, version 3 or later.</p>
+    page</a>.</p>
     </div>
   </details>
     </main>
