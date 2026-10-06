@@ -285,7 +285,7 @@ a:hover { color: var(--accent-lit); border-bottom-color: var(--accent-lit); }
 
 figure { margin: 2.1rem 0; }
 
-figure img, .content img {
+figure img, figure video, .content img {
   display: block;
   max-width: 100%;
   height: auto;

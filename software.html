@@ -242,6 +242,16 @@ window.MathJax = {
     for conservation laws such as the shallow water equations. Solutions can be written to
     VTK files and visualized in ParaView.</p>
 
+    <figure>
+      <video autoplay loop muted playsinline preload="metadata"
+             aria-label="Vortex shedding behind a cylinder computed with FEMd">
+        <source src="assets/images/femd-vortex-shedding.mp4" type="video/mp4">
+      </video>
+      <figcaption>Vortex shedding behind a cylinder at \(Re = 100\) (DFG benchmark 2D-2), the
+      speed \(|u|\) of the incompressible Navier-Stokes equations with Taylor-Hood elements and the
+      Radau IIA method, one of the example notebooks of FEMd.</figcaption>
+    </figure>
+
     <p>Nonlinear problems are solved with Newton's method using symbolic Jacobians, or with
     Newton-Krylov methods based on the complex-step approximation of the Jacobian described
     above. The library also includes sparse direct and iterative linear solvers, implicit
