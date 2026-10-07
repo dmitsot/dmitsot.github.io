@@ -272,7 +272,29 @@ window.MathJax = {
   <p>Another notable system extensively used in applications is the extended Boussinesq
   system proposed by
   <a href="https://www.researchgate.net/profile/Okey-Nwogu" target="_blank" rel="noopener">O. Nwogu</a>, which exhibits
-  optimal linear dispersion characteristics.</p>
+  optimal linear dispersion characteristics. This system is written in terms of the
+  free surface elevation \(\eta\) and the horizontal velocity \(\mathbf{u}_\alpha\)
+  of the fluid at a reference depth \(z=z_\alpha\), and it takes the form</p>
+
+  <div class="eq">
+    \[
+      \begin{aligned}
+        &\eta_t + \nabla\cdot\left[(h+\eta)\,\mathbf{u}_\alpha\right]
+          + \nabla\cdot\left\{\left(\frac{z_\alpha^2}{2}-\frac{h^2}{6}\right) h\,
+            \nabla\left(\nabla\cdot\mathbf{u}_\alpha\right)
+          + \left(z_\alpha+\frac{h}{2}\right) h\,
+            \nabla\left[\nabla\cdot\left(h\,\mathbf{u}_\alpha\right)\right]\right\} = 0 ,\\[2pt]
+        &\mathbf{u}_{\alpha,t} + g\nabla\eta + (\mathbf{u}_\alpha\cdot\nabla)\mathbf{u}_\alpha
+          + z_\alpha\left\{\frac{z_\alpha}{2}\,
+            \nabla\left(\nabla\cdot\mathbf{u}_{\alpha,t}\right)
+          + \nabla\left[\nabla\cdot\left(h\,\mathbf{u}_{\alpha,t}\right)\right]\right\} = 0 ,
+      \end{aligned}
+    \]
+  </div>
+
+  <p>where \(h\) denotes the water depth. Nwogu showed that the choice
+  \(z_\alpha\approx -0.531\,h\) gives an accurate approximation of the linear
+  dispersion relation of the Euler equations over a wide range of water depths.</p>
 
   <p>Although the extended Boussinesq system has been widely used in the study of
   nonlinear and dispersive waves, it shares the same limitations as the Peregrine system
