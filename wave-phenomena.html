@@ -302,27 +302,30 @@ window.MathJax = {
 
   <p>A first step towards a rigorous theory for the extended Boussinesq systems of Nwogu
   type in bounded domains was taken in our work
-  <a href="https://doi.org/10.1016/j.matpur.2022.11.009" target="_blank" rel="noopener">[MM]</a>.
-  Using the unified transform method of A. Fokas, we showed that the linearized systems
-  on a finite interval are well-posed only when they are supplemented by one of exactly
-  two pairs of boundary values, namely \(\left\{u,\ u_{xx}\right\}\) or
+  <a href="https://doi.org/10.1016/j.matpur.2022.11.009" target="_blank" rel="noopener">[MM]</a>,
+  where we studied the one-dimensional problem.
+  Using the unified transform method of A. Fokas, we showed that the one-dimensional
+  linearized systems on a finite interval are well-posed only when they are supplemented
+  by one of exactly two pairs of boundary values, namely \(\left\{u,\ u_{xx}\right\}\) or
   \(\left\{\eta,\ u_x\right\}\) at the endpoints. In particular, the appropriate
   conditions at a vertical wall are \(u=0\) and \(u_{xx}=0\). The condition
   \(\eta_x=0\) follows from these on a flat bottom but is not an independent boundary
-  condition. This observation is important because most of the wave modeling software in
+  condition. In two horizontal dimensions, these wall conditions generalize naturally to
+  conditions on the normal component of the horizontal velocity at the wall.
+  This observation is important because most of the wave modeling software in
   the literature that is based on systems of this type imposes the pair \(u=0\) and
   \(\eta_x=0\) at solid walls, or prescribes only one of the two required conditions.
   These boundary conditions were adopted without theoretical justification, and our
-  analysis indicates that they are probably not the correct ones. We then proved the well-posedness of the
-  nonlinear problem and observed that the existence time of its solutions does not depend
-  on the amplitude of the waves. This suggests that even waves of small amplitude may
-  break during their interaction with a wall. The same work introduces a modified
-  Galerkin finite element method that uses piecewise linear elements, and we proved that
-  it converges with optimal order. To the best of our knowledge, this is the first
-  numerical method for these systems with proven convergence, and its results agree well
-  with laboratory experiments of solitary waves reflected by a vertical wall. We hope that
-  this work will help to place the wall boundary conditions used in coastal engineering
-  models on firmer mathematical ground.</p>
+  analysis indicates that they are probably not the correct ones. We then proved the
+  well-posedness of the one-dimensional nonlinear problem and observed that the existence
+  time of its solutions does not depend on the amplitude of the waves. This suggests that
+  even waves of small amplitude may break during their interaction with a wall. The same
+  work introduces a modified Galerkin finite element method that uses piecewise linear
+  elements, and we proved that it converges with optimal order. To the best of our
+  knowledge, this is the first numerical method for these systems with proven
+  convergence, and its results agree well with laboratory experiments of solitary waves
+  reflected by a vertical wall. We hope that this work will help to place the wall
+  boundary conditions used in coastal engineering models on firmer mathematical ground.</p>
 
   <p>In addition to the two notable and useful systems mentioned earlier, several other
   systems have been derived. However, all of them lack an appropriate supporting theory
